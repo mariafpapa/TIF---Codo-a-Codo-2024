@@ -1,0 +1,28 @@
+{% for producto in productos %}
+
+<form method="post" action="/update" enctype="multipart/form-data">
+    Id:
+    <input type="text" name="txtId" id="txtId" readonly value="{{producto[0]}}"> <br> <br>
+    Título:
+    <input type="text" name="txtTitulo" id="txtTitulo" value="{{producto[1]}}" > <br> <br>
+    Descripción:
+    <input type="text" name="txtDescripcion" id="txtDescripcion" value="{{producto[3]}}"> <br> <br>
+    Precio:
+    <input type="text" name="txtPrecio" id="txtPrecio" value="{{producto[2]}}"> <br> <br>
+    Foto:
+    <input type="file" name="txtImagen" id="txtImagen" value="{{producto[4]}}"> <br> <br>
+    Cantidad:
+    <input type="text" name="txtCantidad" id="txtCantidad" value="{{producto[5]}}"> <br> <br>
+    Categoría:
+    <select name="txtCategoria" id="txtCategoria">
+        <option selected = "true" value="{{producto[6]}}">{{producto[6]}}</option>
+        <option value="Informatica">Informática</option>
+        <option value="Audio">Audio</option>
+        <option value="Video">Video</option>
+        <option value="Gaming">Gaming</option>
+        <option value="Telefonia">Telefonía</option>
+    </select> <br> <br>
+    <input type="submit" value="Guardar Cambios">
+</form>
+
+{% endfor %}

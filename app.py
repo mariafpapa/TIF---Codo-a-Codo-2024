@@ -1,109 +1,148 @@
-from flask import Flask, render_template, request, redirect, send_from_directory 
-from flask_mysqldb import MySQL
+from flask import Flask
+from flask import render_template, request, redirect, send_from_directory
 from datetime import datetime
 import os
 
-# Creación de la aplicación
+#Conexión con Base de Datos MySQL
+from flask_mysqldb import MySQL
+
 app = Flask(__name__)
 
-# Inicialización de la extensión MySQL
-mysql = MySQL()
-
-# Creación de la conexión con la base de datos
-app.config["MYSQL_HOST"]="localhost"
-app.config["MYSQL_USER"]="root"
-app.config["MYSQL_PASSWORD"]=""
-app.config["MYSQL_BD"]="click"
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_PORT'] = 3307
+app.config['MYSQL_DB'] = 'click'
 
 # Guardamos la ruta de la carpeta "uploads" en nuestra app
-UPLOADS = os.path.join("uploads")
-app.config["UPLOADS"]=UPLOADS
+UPLOADS = os.path.join('uploads')
+app.config['CARPETA'] = UPLOADS 
 
-mysql.init_app(app)
+mysql = MySQL(app)
 
 # Acceso a la carpeta uploads
-@app.route('/uploads/<nameImage>')
-def uploads(nameImage):
- return send_from_directory(app.config['UPLOADS'], nameImage)
+@app.route('/uploads/<nombreImagen>')
+def uploads(nombreImagen):
+    return send_from_directory(app.config['CARPETA'],nombreImagen)
 
 # Ruta a la raíz del sitio
-@app.route("/")
+@app.route('/')
 def index():
     
-    sql = "SELECT * FROM `click`.`products`"
-
+    sql = "Select * from `click`.`productos`;"
+    
     conn = mysql.connection
     cursor = conn.cursor()
     cursor.execute(sql)
     
-    db_products = cursor.fetchall()
-    print("-"*60)
-    for product in db_products:
-        print(product)
-        print("-"*60)
+    db_productos = cursor.fetchall()
     
     cursor.close()
-
-    return render_template("products/index.html", products=db_products)
+    
+    return render_template('productos/index.html', productos = db_productos)
 
 # Función para eliminar un registro
-@app.route('/destroy/<int:id>')
-def destroy(id):
-    conn = mysql.connection  
-    cursor = conn.cursor()
-    cursor.execute("DELETE FROM `click`.`products` WHERE id=%s", (id,))
-    conn.commit()
-    cursor.close()
-    return redirect('/')
-
-# Función para editar un registro
-# edit
-
-# Ruta para actualizar los datos de un producto
-@app.route("/update", methods=['POST'])
-def update():
-    _id = request.form['txtID']
-    _title = request.form['txtTitle']
-    _description = request.form['txtDescription']
-    _price = request.form['txtPrice']
-    _count = request.form['txtCount']
-    _category = request.form['txtCategory']
-    _image = request.files['txtImage']
+@app.route('/delete/<int:id>')
+def delete(id):
     
-    sql = "UPDATE click.products SET title=%s, description=%s, price=%s, count=%s, category=%s WHERE id=%s"
-    data = (_title, _description, _price, _count, _category, _id)
+    sql = "Delete from `click`.`productos` where id=%s"
     
     conn = mysql.connection
     cursor = conn.cursor()
-    cursor.execute(sql, data)
+    cursor.execute(sql,(id,))
+    conn.commit()
+    return redirect("/")
+
+@app.route('/edit/<int:id>')
+def edit(id):
     
-    if _image.filename != "":
+    sql = "select * from `click`.`productos` where id=%s"
+    
+    conn = mysql.connection
+    cursor = conn.cursor()
+    cursor.execute(sql,(id,))
+    productos = cursor.fetchall()
+    cursor.close()
+    return render_template('productos/edit.html', productos = productos)
+
+# Ruta para actualizar los datos de un producto
+@app.route('/update', methods = ['POST'] )
+def update():
+    _titulo = request.form['txtTitulo']
+    _descripcion = request.form['txtDescripcion']
+    _precio = request.form['txtPrecio']
+    _imagen = request.files['txtImagen']
+    _cantidad = request.form['txtCantidad']
+    _categoria = request.form['txtCategoria']
+    _id = request.form['txtId']
+    
+    conn = mysql.connection
+    cursor = conn.cursor()
+    
+    sql = "UPDATE `click`.`productos` SET titulo=%s,descripcion=%s,precio=%s,cantidad=%s,categoria=%s \
+    WHERE id=%s;"
+    datos = (_titulo,_descripcion,_precio,_cantidad,_categoria,_id)
+    cursor.execute(sql,datos)
+    
+    if _imagen.filename != '':
         now = datetime.now()
-        date = now.strftime("%Y%H%M%S")
-        newNameImage = date + _image.filename
-        _image.save("uploads/" + newNameImage)
+        tiempo = now.strftime("%Y%H%M%S")
+        nuevoNombreImagen = tiempo+_imagen.filename
+        _imagen.save('TIF---Codo-a-Codo-2024/uploads/'+nuevoNombreImagen)
         
-        cursor.execute("SELECT image FROM click.products WHERE id=%s", (_id,))
-        row = cursor.fetchone()
-        if row and row[0] is not None:
-            namePreviousImage = row[0]
-            pathPreviousImage = os.path.join(app.config["UPLOADS"], namePreviousImage)
-            if os.path.exists(pathPreviousImage):
-                os.remove(pathPreviousImage)
-        cursor.execute("UPDATE click.products SET image=%s WHERE id=%s", (newNameImage, _id))
-    
+        # Consultamos la foto anterior para borrarla del servidor
+        sql="SELECT imagen FROM `click`.`productos` WHERE id=%s"
+        cursor.execute(sql,(_id,))
+        fila = cursor.fetchone()
+        
+        if fila and fila[0] is not None:
+            nombreImagenAnterior = fila[0]
+            rutaImagenAnterior = os.path.join(app.config['CARPETA'],nombreImagenAnterior)
+            
+            if os.path.exists('TIF---Codo-a-Codo-2024/'+rutaImagenAnterior):
+                    os.remove('TIF---Codo-a-Codo-2024/'+rutaImagenAnterior)
+       
+        # Actualizamos la base de datos con el nuevo nombre de la foto
+            sql="UPDATE `click`.`productos` SET imagen=%s WHERE id=%s"
+            cursor.execute(sql,(nuevoNombreImagen, _id)) 
+                    
     conn.commit()
     cursor.close()
+    
     return redirect("/")
 
 # Ruta para ingresar un producto
-@app.route("/create")
+@app.route('/create')
 def create():
-    return render_template("products/create.html")
+    return render_template('productos/create.html')
 
 # Función para recibir los datos de los productos ingresados
-# storage
+@app.route('/store', methods = ['POST'] )
+def storage():
+    _titulo = request.form['txtTitulo']
+    _descripcion = request.form['txtDescripcion']
+    _precio = request.form['txtPrecio']
+    _imagen = request.files['txtImagen']
+    _cantidad = request.form['txtCantidad']
+    _categoria = request.form['txtCategoria']
+    
+    if _imagen.filename != '':
+        now = datetime.now()
+        tiempo = now.strftime("%Y%H%M%S")
+        nuevoNombreImagen = tiempo+_imagen.filename
+        _imagen.save('TIF---Codo-a-Codo-2024/uploads/'+nuevoNombreImagen)
+    
+    datos = (_titulo,_descripcion,_precio,nuevoNombreImagen,_cantidad,_categoria)
 
+    sql = "INSERT INTO `click`.`productos`(`id`,`titulo`,`descripcion`,`precio`,`imagen`,\
+       `cantidad`,`categoria`) VALUES (NULL, %s, %s, %s, %s, %s, %s);"
+    
+    conn = mysql.connection
+    cursor = conn.cursor()
+    cursor.execute(sql,datos)
+    conn.commit()
+    
+    return redirect("/")
 
-if __name__ =="__main__":
-    app.run(debug=True) 
+if __name__ == '__main__':
+    app.run(debug=True)
