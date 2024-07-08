@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Click</title>
+    <!-- TODO: cambiar el favicon -->
+    <link rel="icon" href="./favicon.png" type="image/png" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/versions/bulma-no-dark-mode.min.css"
+    />
+  </head>
+  <body>
+    <nav
+      class="navbar is-fixed-top"
+      role="navigation"
+      aria-label="main navigation"
+    >
+      <!-- TODO: cambiar el icon -->
+      <div class="navbar-brand">
+        <a class="navbar-item" href="index.html">
+          <h1 class="title p-2">
+            <img
+              src="{{ url_for('static', filename='./img/icon.png') }}"
+              alt="icon"
+            />
+            Click
+          </h1>
+        </a>
+
+        <a
+          role="button"
+          class="navbar-burger"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="theNavbar"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div id="theNavbar" class="navbar-menu">
+        <div class="navbar-start">
+          <a href="index.html#home" class="navbar-item"
+            ><i class="bx bx-home bx-tada-hover"></i> Inicio
+          </a>
+
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link"
+              ><i class="bx bx-category bx-tada-hover"></i> Categorías
+            </a>
+
+            <div class="navbar-dropdown">
+              <a href="index.html#informatica" class="navbar-item"
+                ><i class="bx bx-laptop bx-tada-hover"></i> Informática
+              </a>
+              <a href="index.html#audio" class="navbar-item"
+                ><i class="bx bx-speaker bx-tada-hover"></i> Audio
+              </a>
+              <a href="index.html#video" class="navbar-item"
+                ><i class="bx bx-video bx-tada-hover"></i> Video
+              </a>
+              <a href="index.html#gaming" class="navbar-item"
+                ><i class="bx bx-game bx-tada-hover"></i> Gaming
+              </a>
+              <a href="index.html#telefonia" class="navbar-item"
+                ><i class="bx bx-mobile-alt bx-tada-hover"></i> Telefonía
+              </a>
+            </div>
+          </div>
+          <a href="index.html#contactus" class="navbar-item"
+            ><i class="bx bx-envelope bx-tada-hover"></i> Contáctenos
+          </a>
+        </div>
+
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="buttons">
+              <a class="button is-primary">
+                <strong><i class="bx bx-user-plus"></i> Registrar</strong>
+              </a>
+              <a class="button is-light"
+                ><i class="bx bx-user-circle"></i> Ingresar
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <section id="home" class="section">
+      <div class="container mt-6">
+        <div class="grid">
+          <div class="cell">
+            <h1 class="title">Bienvenidos</h1>
+            <p class="subtitle">A la mejor tienda de electrónica del condado</p>
+            <p>
+              Adéntrate en un universo de posibilidades tecnológicas. Descubre
+              un sinfín de productos electrónicos e informáticos que te ayudarán
+              a impulsar tu vida, potenciar tu productividad y disfrutar al
+              máximo del entretenimiento. Desde smartphones y laptops de última
+              generación hasta televisores 4K y sistemas de sonido envolventes,
+              en nuestro portal encontrarás todo lo que necesitas para estar a
+              la vanguardia tecnológica.
+            </p>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="cell has-text-centered">
+            <img
+              src="{{ url_for('static', filename='img/shopping.svg') }}"
+              alt="Home"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="informatica" class="section has-background-light">
+      <div class="container mt-6">
+        <div
+          class="fixed-grid has-2-cols-desktop has-2-cols-tablet has-1-cols-mobile"
+        >
+          <div class="grid">
+            <div class="cell">
+              <h1 class="title">
+                <i class="bx bx-laptop bx-tada-hover"></i> Informática
+              </h1>
+              <p class="subtitle">Despliega tu potencial al máximo</p>
+              <p>
+                Encuentra la computadora perfecta para ti, ya seas un estudiante
+                que necesita una laptop ligera y versátil, un profesional que
+                requiere un equipo potente para trabajar o un gamer que busca
+                una máquina de alto rendimiento para disfrutar de sus juegos
+                favoritos. Ofrecemos una amplia gama de computadoras de las
+                mejores marcas, con diferentes configuraciones y precios para
+                que puedas elegir la que mejor se adapte a tus necesidades.
+              </p>
+            </div>
+            <div class="cell">
+              <img
+                src="{{ url_for('static', filename='img/informatic.svg') }}"
+                alt="Informática"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="fixed-grid has-4-cols-fullhd has-4-cols-widescreen has-3-cols-desktop has-2-cols-tablet has-1-cols-mobile"
+        >
+          <div
+            id="electronicsProducts"
+            class="grid animate__animated animate__fadeIn animate__delay-1s"
+          >
+            <!-- TODO: Productos de informatica -->
+            {% for producto in informatica %}
+            <div class="cell m-2">
+              <div class="box has-background-white has-text-centered">
+                <p class="title is-6 has-text-black">{{producto[1]}}</p>
+                <figure class="image w-100">
+                  <img src="uploads/{{producto[4]}}" alt="{{producto[1]}}" />
+                </figure>
+                <p>{{producto[3]}}</p>
+                <p class="title is-5 has-text-black m-4">${{producto[2]}}</p>
+                <button class="button is-large is-primary is-rounded">
+                  Buy
+                </button>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="audio" class="section">
+      <div class="container mt-6">
+        <div
+          class="fixed-grid has-2-cols-desktop has-2-cols-tablet has-1-cols-mobile"
+        >
+          <div class="grid">
+            <div class="cell">
+              <h1 class="title">
+                <i class="bx bx-speaker bx-tada-hover"></i> Audio
+              </h1>
+              <p class="subtitle">Siente la música como nunca antes</p>
+              <p>
+                Sumérgete en un mundo de sonido envolvente y disfruta de tus
+                canciones favoritas con la más alta calidad. En nuestro catálogo
+                encontrarás una gran variedad de bocinas, audífonos y barras de
+                sonido de las mejores marcas, para que puedas crear la
+                experiencia auditiva perfecta para ti. Además, también te
+                ofrecemos instrumentos musicales, micrófonos y interfaces de
+                audio para que puedas dar rienda suelta a tu creatividad
+                musical.
+              </p>
+            </div>
+            <div class="cell">
+              <img
+                src="{{ url_for('static', filename='img/music.svg') }}"
+                alt="Audio"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="fixed-grid has-4-cols-desktop has-2-cols-tablet has-1-cols-mobile"
+        >
+          <div
+            id="jeweleryProducts"
+            class="grid animate__animated animate__fadeIn animate__delay-2s"
+          ></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="video" class="section has-background-light">
+      <div class="container mt-6">
+        <div
+          class="fixed-grid has-2-cols-desktop has-2-cols-tablet has-1-cols-mobile"
+        >
+          <div class="grid">
+            <div class="cell">
+              <h1 class="title">
+                <i class="bx bx-video bx-tada-hover"></i> Video
+              </h1>
+              <p class="subtitle">Captura y comparte tus mejores momentos</p>
+              <p>
+                Inmortaliza tus experiencias con cámaras digitales, drones y
+                videocámaras profesionales que te permitirán capturar imágenes y
+                videos de alta calidad. Además, en nuestro sitio web encontrarás
+                televisores 4K, 8K y proyectores de última generación para que
+                puedas disfrutar de tus películas y series favoritas con una
+                experiencia visual incomparable. Y si te gusta crear contenido
+                audiovisual, te ofrecemos una amplia gama de software de edición
+                de video y herramientas de producción para que puedas dar rienda
+                suelta a tu creatividad.
+              </p>
+            </div>
+            <div class="cell">
+              <img
+                src="{{ url_for('static', filename='img/video.svg') }}"
+                alt="Video"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="fixed-grid has-4-cols-desktop has-2-cols-tablet has-1-cols-mobile"
+        >
+          <div
+            id="mensclothingProducts"
+            class="grid animate__animated animate__fadeIn animate__delay-3s"
+          ></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="gaming" class="section">
+      <div class="container mt-6">
+        <div
+          class="fixed-grid has-2-cols-desktop has-2-cols-tablet has-1-cols-mobile"
+        >
+          <div class="grid">
+            <div class="cell">
+              <h1 class="title">
+                <i class="bx bx-game bx-tada-hover"></i> Gaming
+              </h1>
+              <p class="subtitle">
+                Eleva tu experiencia de juego al siguiente nivel
+              </p>
+              <p>
+                Equipa tu estación de batalla con computadoras gaming de última
+                generación, teclados y mouse de alto rendimiento, monitores de
+                alta velocidad y mucho más. En nuestro portal encontrarás todo
+                lo que necesitas para convertirte en un jugador profesional y
+                disfrutar de tus juegos favoritos al máximo. Además, también te
+                ofrecemos accesorios como sillas ergonómicas, alfombrillas de
+                mouse y auriculares gaming para que puedas jugar con total
+                comodidad y estilo.
+              </p>
+            </div>
+            <div class="cell">
+              <img
+                src="{{ url_for('static', filename='img/gaming.svg') }}"
+                alt="Gaming"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="fixed-grid has-3-cols-desktop has-2-cols-tablet has-1-cols-mobile"
+        >
+          <div
+            id="womensclothingProducts"
+            class="grid animate__animated animate__fadeIn animate__delay-4s"
+          ></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="telefonia" class="section has-background-light">
+      <div class="container mt-6">
+        <div
+          class="fixed-grid has-2-cols-desktop has-2-cols-tablet has-1-cols-mobile"
+        >
+          <div class="grid">
+            <div class="cell">
+              <h1 class="title">
+                <i class="bx bx-mobile-alt bx-tada-hover"></i> Telefonía
+              </h1>
+              <p class="subtitle">Conecta con el mundo a tu manera</p>
+              <p>
+                Elige el smartphone que mejor se adapte a tu estilo de vida y
+                necesidades. En nuestro sitio web encontrarás una amplia gama de
+                smartphones de las mejores marcas, con las últimas funciones y
+                tecnología de vanguardia. Disfruta de cámaras de alta
+                resolución, pantallas de gran tamaño, procesadores potentes y
+                mucho más. Además, también te ofrecemos una gran variedad de
+                planes de telefonía para que puedas estar siempre conectado.
+              </p>
+            </div>
+            <div class="cell">
+              <img
+                src="{{ url_for('static', filename='img/phone.svg') }}"
+                alt="Telefonia"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="fixed-grid has-4-cols-desktop has-2-cols-tablet has-1-cols-mobile"
+        >
+          <div
+            id="mensclothingProducts"
+            class="grid animate__animated animate__fadeIn animate__delay-3s"
+          ></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contactus" class="section">
+      <div class="container mt-6">
+        <div
+          class="fixed-grid has-2-cols-desktop has-2-cols-tablet has-1-cols-mobile"
+        >
+          <div class="grid">
+            <div class="cell">
+              <h1 class="title">
+                <i class="bx bx-envelope bx-tada-hover"></i> Contáctenos
+              </h1>
+              <p class="subtitle">Póngase en contacto con nosotros</p>
+              <p>
+                ¿Tiene preguntas o necesita ayuda? Nuestro equipo en Click está
+                aquí para ayudar. Si tiene alguna duda sobre nuestros productos,
+                necesita ayuda con un pedido o tiene cualquier otra pregunta,
+                estamos a sólo un mensaje de distancia. Rellene el siguiente
+                formulario de contacto y nos pondremos en contacto lo antes
+                posible. Su satisfacción es nuestra máxima prioridad.
+              </p>
+            </div>
+            <div class="cell">
+              <img src="./img/message.svg" alt="Contact us" />
+            </div>
+          </div>
+        </div>
+        <div id="contact" class="grid">
+          <div class="cell">
+            <form id="contactform" action="#">
+              <div class="field">
+                <label class="label">Nombre *</label>
+                <div class="control has-icons-left">
+                  <input
+                    id="inputName"
+                    class="input"
+                    type="text"
+                    placeholder="Ingrese su nombre"
+                    value=""
+                    minlength="3"
+                    maxlength="30"
+                    required
+                  />
+                  <span class="icon is-small is-left">
+                    <i class="bx bx-user bx-tada-hover"></i>
+                  </span>
+                </div>
+                <p id="adviceName" class="help"></p>
+              </div>
+
+              <div class="field">
+                <label class="label">Correo *</label>
+                <div class="control has-icons-left">
+                  <input
+                    id="inputEmail"
+                    class="input"
+                    type="email"
+                    placeholder="Ingrese su correo"
+                    value=""
+                    minlength="8"
+                    required
+                  />
+                  <span class="icon is-small is-left">
+                    <i class="bx bx-envelope"></i>
+                  </span>
+                </div>
+                <p id="adviceEmail" class="help"></p>
+              </div>
+
+              <div class="field">
+                <label class="label">Teléfono</label>
+                <div class="control has-icons-left">
+                  <input
+                    id="inputPhone"
+                    class="input"
+                    type="number"
+                    placeholder="Ingrese su Teléfono"
+                    value=""
+                  />
+                  <span class="icon is-small is-left">
+                    <i class="bx bx-phone bx-tada-hover"></i>
+                  </span>
+                </div>
+                <p id="advicePhone" class="help"></p>
+              </div>
+
+              <div class="field">
+                <label class="label">Asunto</label>
+                <div class="control">
+                  <div class="select">
+                    <select>
+                      <option value="Informatica" selected>Informática</option>
+                      <option value="Audio">Audio</option>
+                      <option value="Video">Video</option>
+                      <option value="Gaming">Gaming</option>
+                      <option value="Telefonia">Telefonía</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label">Mensaje *</label>
+                <div class="control">
+                  <textarea
+                    id="inputMessage"
+                    class="textarea"
+                    placeholder="Ingrese su Mensaje"
+                    minlength="10"
+                    required
+                  ></textarea>
+                </div>
+                <p id="adviceMessage" class="help"></p>
+              </div>
+
+              <div class="field">
+                <div class="control">
+                  <label class="checkbox">
+                    <input type="checkbox" required />
+                    Acepto los <a href="#">términos y condiciones</a>
+                  </label>
+                </div>
+              </div>
+              <div class="field is-grouped">
+                <div class="control">
+                  <button class="button is-link" type="submit">Enviar</button>
+                </div>
+                <div class="control">
+                  <button class="button is-link is-light" type="reset">
+                    Cancelar
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div id="formResponse" class="grid is-hidden">
+          <div class="cell">
+            <div class="notification is-primary">
+              <button id="clearFormResponse" class="delete"></button>
+              <p id="confirmForm"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="content has-text-centered">
+        <p>
+          <strong>Click</strong> Sitio web creado por
+          <a href="#">Papa - Juvenal - Gavilan</a> para CAC 2024 Comision 24149.
+        </p>
+        <a href="#">
+          <h3>
+            <i class="bx bxl-facebook-circle"></i>
+            <i class="bx bxl-instagram"></i>
+            <i class="bx bxl-twitter"></i>
+            <i class="bx bxl-whatsapp"></i>
+          </h3>
+        </a>
+      </div>
+    </footer>
+    <script src="js/app.js" defer></script>
+  </body>
+</html>
