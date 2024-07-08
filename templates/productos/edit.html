@@ -1,28 +1,216 @@
-{% for producto in productos %}
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Click - Dashboard</title>
+    <!-- TODO: cambiar el favicon -->
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='favicon.png') }}"
+      type="image/png"
+    />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/versions/bulma-no-dark-mode.min.css"
+    />
+  </head>
+  <body>
+    <nav
+      class="navbar is-fixed-top"
+      role="navigation"
+      aria-label="main navigation"
+    >
+      <!-- TODO: cambiar el icon -->
+      <div class="navbar-brand">
+        <a class="navbar-item" href="{{ url_for('index') }}">
+          <h1 class="title p-2">
+            <img
+              src="{{ url_for('static', filename='./img/icon.png') }}"
+              alt="icon"
+            />
+            Click
+          </h1>
+        </a>
 
-<form method="post" action="/update" enctype="multipart/form-data">
-    Id:
-    <input type="text" name="txtId" id="txtId" readonly value="{{producto[0]}}"> <br> <br>
-    Título:
-    <input type="text" name="txtTitulo" id="txtTitulo" value="{{producto[1]}}" > <br> <br>
-    Descripción:
-    <input type="text" name="txtDescripcion" id="txtDescripcion" value="{{producto[3]}}"> <br> <br>
-    Precio:
-    <input type="text" name="txtPrecio" id="txtPrecio" value="{{producto[2]}}"> <br> <br>
-    Foto:
-    <input type="file" name="txtImagen" id="txtImagen" value="{{producto[4]}}"> <br> <br>
-    Cantidad:
-    <input type="text" name="txtCantidad" id="txtCantidad" value="{{producto[5]}}"> <br> <br>
-    Categoría:
-    <select name="txtCategoria" id="txtCategoria">
-        <option selected = "true" value="{{producto[6]}}">{{producto[6]}}</option>
-        <option value="Informatica">Informática</option>
-        <option value="Audio">Audio</option>
-        <option value="Video">Video</option>
-        <option value="Gaming">Gaming</option>
-        <option value="Telefonia">Telefonía</option>
-    </select> <br> <br>
-    <input type="submit" value="Guardar Cambios">
-</form>
+        <a
+          role="button"
+          class="navbar-burger"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="theNavbar"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
 
-{% endfor %}
+      <div id="theNavbar" class="navbar-menu">
+        <div class="navbar-start">
+          <a href="{{ url_for('index') }}" class="navbar-item"
+            ><i class="bx bx-home bx-tada-hover"></i> Inicio
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <section id="home" class="section">
+      <div class="container mt-6">
+        <div class="grid">
+          <div class="cell">
+            <h1 class="title">Dashboard</h1>
+            <p class="subtitle">Edite este producto de la tienda</p>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="cell">
+            <form
+              method="post"
+              action="/products/update"
+              enctype="multipart/form-data"
+            >
+              {% for producto in productos %}
+
+              <div class="field">
+                <label class="label">Id</label>
+                <div class="control">
+                  <input
+                    class="input"
+                    type="text"
+                    name="txtId"
+                    id="txtId"
+                    readonly
+                    value="{{producto[0]}}"
+                  />
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label">Título</label>
+                <div class="control">
+                  <input
+                    class="input"
+                    type="text"
+                    name="txtTitulo"
+                    id="txtTitulo"
+                    placeholder="Ingrese el título de su producto"
+                    value="{{producto[1]}}"
+                  />
+                </div>
+              </div>
+
+              <!-- <input type="text" name="txtDescripcion" id="txtDescripcion" /> -->
+              <div class="field">
+                <label class="label">Descripción</label>
+                <div class="control">
+                  <input
+                    class="input"
+                    type="text"
+                    name="txtDescripcion"
+                    id="txtDescripcion"
+                    placeholder="Ingrese la descripción de su producto"
+                    value="{{producto[3]}}"
+                  />
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label">Precio</label>
+                <div class="control">
+                  <input
+                    class="input"
+                    type="number"
+                    name="txtPrecio"
+                    id="txtPrecio"
+                    placeholder="Ingrese el precio de su producto"
+                    value="{{producto[2]}}"
+                  />
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label">Cantidad</label>
+                <div class="control">
+                  <input
+                    class="input"
+                    type="number"
+                    name="txtCantidad"
+                    id="txtCantidad"
+                    placeholder="Ingrese la cantidad de su producto"
+                    value="{{producto[5]}}"
+                  />
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label">Descripción</label>
+                <div class="select">
+                  <select name="txtCategoria" id="txtCategoria">
+                    <option selected="true" value="{{producto[6]}}">
+                      {{producto[6]}}
+                    </option>
+                    <option value="Informatica">Informática</option>
+                    <option value="Audio">Audio</option>
+                    <option value="Video">Video</option>
+                    <option value="Gaming">Gaming</option>
+                    <option value="Telefonia">Telefonía</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label">Imagen</label>
+                <div class="file has-name">
+                  <label class="file-label">
+                    <input
+                      class="file-input"
+                      type="file"
+                      name="txtImagen"
+                      id="txtImagen"
+                    />
+                    <span class="file-cta">
+                      <span class="file-icon">
+                        <i class="fas fa-upload"></i>
+                      </span>
+                      <span class="file-label"> Elija una foto… </span>
+                    </span>
+                    <span class="file-name" id="nombreImagen"
+                      >{{producto[4]}}</span
+                    >
+                  </label>
+                </div>
+                <div id="preview"></div>
+              </div>
+
+              <div class="field">
+                <div class="control">
+                  <button type="submit" class="button is-link">
+                    Guardar Cambios
+                  </button>
+                </div>
+              </div>
+
+              {% endfor %}
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="{{ url_for('static', filename='js/edit.js') }}" defer></script>
+  </body>
+</html>

@@ -148,7 +148,7 @@ def create():
 
 
 # Función para recibir los datos de los productos ingresados
-@app.route("/store", methods=["POST"])
+@app.route("/products/store", methods=["POST"])
 def storage():
     _titulo = request.form["txtTitulo"]
     _descripcion = request.form["txtDescripcion"]
