@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Click</title>
     <!-- TODO: cambiar el favicon -->
-    <link rel="icon" href="./favicon.png" type="image/png" />
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='favicon.png') }}"
+      type="image/png"
+    />
     <link
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
@@ -31,7 +35,7 @@
     >
       <!-- TODO: cambiar el icon -->
       <div class="navbar-brand">
-        <a class="navbar-item" href="index.html">
+        <a class="navbar-item" href="#home">
           <h1 class="title p-2">
             <img
               src="{{ url_for('static', filename='./img/icon.png') }}"
@@ -57,7 +61,7 @@
 
       <div id="theNavbar" class="navbar-menu">
         <div class="navbar-start">
-          <a href="index.html#home" class="navbar-item"
+          <a href="#home" class="navbar-item"
             ><i class="bx bx-home bx-tada-hover"></i> Inicio
           </a>
 
@@ -67,24 +71,24 @@
             </a>
 
             <div class="navbar-dropdown">
-              <a href="index.html#informatica" class="navbar-item"
+              <a href="#informatica" class="navbar-item"
                 ><i class="bx bx-laptop bx-tada-hover"></i> Informática
               </a>
-              <a href="index.html#audio" class="navbar-item"
+              <a href="#audio" class="navbar-item"
                 ><i class="bx bx-speaker bx-tada-hover"></i> Audio
               </a>
-              <a href="index.html#video" class="navbar-item"
+              <a href="#video" class="navbar-item"
                 ><i class="bx bx-video bx-tada-hover"></i> Video
               </a>
-              <a href="index.html#gaming" class="navbar-item"
+              <a href="#gaming" class="navbar-item"
                 ><i class="bx bx-game bx-tada-hover"></i> Gaming
               </a>
-              <a href="index.html#telefonia" class="navbar-item"
+              <a href="#telefonia" class="navbar-item"
                 ><i class="bx bx-mobile-alt bx-tada-hover"></i> Telefonía
               </a>
             </div>
           </div>
-          <a href="index.html#contactus" class="navbar-item"
+          <a href="#contactus" class="navbar-item"
             ><i class="bx bx-envelope bx-tada-hover"></i> Contáctenos
           </a>
         </div>
@@ -165,10 +169,9 @@
           class="fixed-grid has-4-cols-fullhd has-4-cols-widescreen has-3-cols-desktop has-2-cols-tablet has-1-cols-mobile"
         >
           <div
-            id="electronicsProducts"
+            id="productosInformatica"
             class="grid animate__animated animate__fadeIn animate__delay-1s"
           >
-            <!-- TODO: Productos de informatica -->
             {% for producto in informatica %}
             <div class="cell m-2">
               <div class="box has-background-white has-text-centered">
@@ -223,9 +226,25 @@
           class="fixed-grid has-4-cols-desktop has-2-cols-tablet has-1-cols-mobile"
         >
           <div
-            id="jeweleryProducts"
+            id="productosAudio"
             class="grid animate__animated animate__fadeIn animate__delay-2s"
-          ></div>
+          >
+            {% for producto in audio %}
+            <div class="cell m-2">
+              <div class="box has-background-white has-text-centered">
+                <p class="title is-6 has-text-black">{{producto[1]}}</p>
+                <figure class="image w-100">
+                  <img src="uploads/{{producto[4]}}" alt="{{producto[1]}}" />
+                </figure>
+                <p>{{producto[3]}}</p>
+                <p class="title is-5 has-text-black m-4">${{producto[2]}}</p>
+                <button class="button is-large is-primary is-rounded">
+                  Buy
+                </button>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
         </div>
       </div>
     </section>
@@ -265,9 +284,25 @@
           class="fixed-grid has-4-cols-desktop has-2-cols-tablet has-1-cols-mobile"
         >
           <div
-            id="mensclothingProducts"
+            id="productosVideo"
             class="grid animate__animated animate__fadeIn animate__delay-3s"
-          ></div>
+          >
+            {% for producto in video %}
+            <div class="cell m-2">
+              <div class="box has-background-white has-text-centered">
+                <p class="title is-6 has-text-black">{{producto[1]}}</p>
+                <figure class="image w-100">
+                  <img src="uploads/{{producto[4]}}" alt="{{producto[1]}}" />
+                </figure>
+                <p>{{producto[3]}}</p>
+                <p class="title is-5 has-text-black m-4">${{producto[2]}}</p>
+                <button class="button is-large is-primary is-rounded">
+                  Buy
+                </button>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
         </div>
       </div>
     </section>
@@ -308,9 +343,25 @@
           class="fixed-grid has-3-cols-desktop has-2-cols-tablet has-1-cols-mobile"
         >
           <div
-            id="womensclothingProducts"
+            id="productosGaming"
             class="grid animate__animated animate__fadeIn animate__delay-4s"
-          ></div>
+          >
+            {% for producto in gaming %}
+            <div class="cell m-2">
+              <div class="box has-background-white has-text-centered">
+                <p class="title is-6 has-text-black">{{producto[1]}}</p>
+                <figure class="image w-100">
+                  <img src="uploads/{{producto[4]}}" alt="{{producto[1]}}" />
+                </figure>
+                <p>{{producto[3]}}</p>
+                <p class="title is-5 has-text-black m-4">${{producto[2]}}</p>
+                <button class="button is-large is-primary is-rounded">
+                  Buy
+                </button>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
         </div>
       </div>
     </section>
@@ -348,9 +399,25 @@
           class="fixed-grid has-4-cols-desktop has-2-cols-tablet has-1-cols-mobile"
         >
           <div
-            id="mensclothingProducts"
+            id="productosTelefonia"
             class="grid animate__animated animate__fadeIn animate__delay-3s"
-          ></div>
+          >
+            {% for producto in telefonia %}
+            <div class="cell m-2">
+              <div class="box has-background-white has-text-centered">
+                <p class="title is-6 has-text-black">{{producto[1]}}</p>
+                <figure class="image w-100">
+                  <img src="uploads/{{producto[4]}}" alt="{{producto[1]}}" />
+                </figure>
+                <p>{{producto[3]}}</p>
+                <p class="title is-5 has-text-black m-4">${{producto[2]}}</p>
+                <button class="button is-large is-primary is-rounded">
+                  Buy
+                </button>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
         </div>
       </div>
     </section>
@@ -376,7 +443,10 @@
               </p>
             </div>
             <div class="cell">
-              <img src="./img/message.svg" alt="Contact us" />
+              <img
+                src="{{ url_for('static', filename='img/message.svg') }}"
+                alt="Contact us"
+              />
             </div>
           </div>
         </div>
@@ -517,6 +587,6 @@
         </a>
       </div>
     </footer>
-    <script src="js/app.js" defer></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
   </body>
 </html>

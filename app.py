@@ -31,12 +31,31 @@ def uploads(nombreImagen):
 @app.route("/")
 def index():
     sqlInformatica = "Select * from productos Where categoria like 'Informatica';"
+    sqlAudio = "Select * from productos Where categoria like 'Audio';"
+    sqlVideo = "Select * from productos Where categoria like 'Video';"
+    sqlGaming = "Select * from productos Where categoria like 'Gaming';"
+    sqlTelefonia = "Select * from productos Where categoria like 'Telefonia';"
     conn = mysql.connection
     cursor = conn.cursor()
     cursor.execute(sqlInformatica)
-    db_productos = cursor.fetchall()
+    db_informatica = cursor.fetchall()
+    cursor.execute(sqlAudio)
+    db_audio = cursor.fetchall()
+    cursor.execute(sqlVideo)
+    db_video = cursor.fetchall()
+    cursor.execute(sqlGaming)
+    db_gaming = cursor.fetchall()
+    cursor.execute(sqlTelefonia)
+    db_telefonia = cursor.fetchall()
     cursor.close()
-    return render_template("index.html", informatica=db_productos)
+    return render_template(
+        "index.html",
+        informatica=db_informatica,
+        audio=db_audio,
+        video=db_video,
+        gaming=db_gaming,
+        telefonia=db_telefonia,
+    )
 
 
 # Ruta raiz de productos
@@ -52,7 +71,7 @@ def indexProductos():
 
 
 # Función para eliminar un registro
-@app.route("/delete/<int:id>")
+@app.route("/products/delete/<int:id>")
 def delete(id):
     sql = "Delete from `click`.`productos` where id=%s"
     conn = mysql.connection
@@ -62,7 +81,7 @@ def delete(id):
     return redirect("/")
 
 
-@app.route("/edit/<int:id>")
+@app.route("/products/edit/<int:id>")
 def edit(id):
     sql = "select * from `click`.`productos` where id=%s"
     conn = mysql.connection
@@ -74,7 +93,7 @@ def edit(id):
 
 
 # Ruta para actualizar los datos de un producto
-@app.route("/update", methods=["POST"])
+@app.route("/products/update", methods=["POST"])
 def update():
     _titulo = request.form["txtTitulo"]
     _descripcion = request.form["txtDescripcion"]
@@ -123,7 +142,7 @@ def update():
 
 
 # Ruta para ingresar un producto
-@app.route("/create")
+@app.route("/products/create")
 def create():
     return render_template("productos/create.html")
 
