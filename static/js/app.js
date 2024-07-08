@@ -32,7 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // preLoadProducts();
 
     validationInput("inputName", "adviceName", "nombre no válido, es demasiado corto");
     validationInput("inputEmail", "adviceEmail", "correo electrónico no válido, por favor compruébelo");
