@@ -20,12 +20,10 @@ app.config["CARPETA"] = UPLOADS
 
 mysql = MySQL(app)
 
-
 # Acceso a la carpeta uploads
 @app.route("/uploads/<nombreImagen>")
 def uploads(nombreImagen):
     return send_from_directory(app.config["CARPETA"], nombreImagen)
-
 
 # Ruta a la raíz del sitio
 @app.route("/")
@@ -57,7 +55,6 @@ def index():
         telefonia=db_telefonia,
     )
 
-
 # Ruta raiz de productos
 @app.route("/products")
 def indexProductos():
@@ -69,17 +66,27 @@ def indexProductos():
     cursor.close()
     return render_template("productos/index.html", productos=db_productos)
 
-
 # Función para eliminar un registro
 @app.route("/products/delete/<int:id>")
 def delete(id):
+    sqlImagen = "Select imagen from `click`.`productos` where id=%s"
     sql = "Delete from `click`.`productos` where id=%s"
     conn = mysql.connection
     cursor = conn.cursor()
+    
+    cursor.execute(sqlImagen, (id,))
+    fila = cursor.fetchone()
+
+    if fila and fila[0] is not None:
+        nombreImagenAnterior = fila[0]
+        rutaImagenAnterior = os.path.join(app.config["CARPETA"], nombreImagenAnterior)
+
+        if os.path.exists("./" + rutaImagenAnterior):
+            os.remove("./" + rutaImagenAnterior)   
+    
     cursor.execute(sql, (id,))
     conn.commit()
-    return redirect("/")
-
+    return redirect("/products")
 
 @app.route("/products/edit/<int:id>")
 def edit(id):
@@ -90,7 +97,6 @@ def edit(id):
     productos = cursor.fetchall()
     cursor.close()
     return render_template("productos/edit.html", productos=productos)
-
 
 # Ruta para actualizar los datos de un producto
 @app.route("/products/update", methods=["POST"])
@@ -124,12 +130,10 @@ def update():
 
         if fila and fila[0] is not None:
             nombreImagenAnterior = fila[0]
-            rutaImagenAnterior = os.path.join(
-                app.config["CARPETA"], nombreImagenAnterior
-            )
+            rutaImagenAnterior = os.path.join(app.config["CARPETA"], nombreImagenAnterior)
 
-            # if os.path.exists("TIF---Codo-a-Codo-2024/" + rutaImagenAnterior):
-            #     os.remove("TIF---Codo-a-Codo-2024/" + rutaImagenAnterior)
+            if os.path.exists("./" + rutaImagenAnterior):
+                os.remove("./" + rutaImagenAnterior)
 
             # Actualizamos la base de datos con el nuevo nombre de la foto
             sql = "UPDATE `click`.`productos` SET imagen=%s WHERE id=%s"
@@ -138,7 +142,7 @@ def update():
     conn.commit()
     cursor.close()
 
-    return redirect("/")
+    return redirect("/products")
 
 
 # Ruta para ingresar un producto
@@ -173,7 +177,7 @@ def storage():
     cursor.execute(sql, datos)
     conn.commit()
 
-    return redirect("/")
+    return redirect("/products")
 
 
 if __name__ == "__main__":
