@@ -2,17 +2,20 @@ from flask import Flask
 from flask import render_template, request, redirect, send_from_directory
 from datetime import datetime
 import os
+from dotenv import load_dotenv
 
 # Conexión con Base de Datos MySQL
 from flask_mysqldb import MySQL
 
+load_dotenv()
+
 app = Flask(__name__)
 
-app.config["MYSQL_HOST"] = "localhost"
-app.config["MYSQL_USER"] = "root"
-app.config["MYSQL_PASSWORD"] = ""
-app.config["MYSQL_PORT"] = 3306
-app.config["MYSQL_DB"] = "click"
+app.config["MYSQL_HOST"] = os.getenv("DB_HOST")
+app.config["MYSQL_USER"] = os.getenv("DB_USER")
+app.config["MYSQL_PASSWORD"] = os.getenv("DB_PASSWORD")
+app.config["MYSQL_PORT"] = int(os.getenv("DB_PORT"))
+app.config["MYSQL_DB"] = os.getenv("DB_NAME")
 
 # Guardamos la ruta de la carpeta "uploads" en nuestra app
 UPLOADS = os.path.join("./uploads")
@@ -20,10 +23,12 @@ app.config["CARPETA"] = UPLOADS
 
 mysql = MySQL(app)
 
+
 # Acceso a la carpeta uploads
 @app.route("/uploads/<nombreImagen>")
 def uploads(nombreImagen):
     return send_from_directory(app.config["CARPETA"], nombreImagen)
+
 
 # Ruta a la raíz del sitio
 @app.route("/")
@@ -55,10 +60,11 @@ def index():
         telefonia=db_telefonia,
     )
 
+
 # Ruta raiz de productos
 @app.route("/products")
 def indexProductos():
-    sql = "Select * from `click`.`productos`;"
+    sql = "Select * from productos;"
     conn = mysql.connection
     cursor = conn.cursor()
     cursor.execute(sql)
@@ -66,14 +72,15 @@ def indexProductos():
     cursor.close()
     return render_template("productos/index.html", productos=db_productos)
 
+
 # Función para eliminar un registro
 @app.route("/products/delete/<int:id>")
 def delete(id):
-    sqlImagen = "Select imagen from `click`.`productos` where id=%s"
-    sql = "Delete from `click`.`productos` where id=%s"
+    sqlImagen = "Select imagen from productos where id=%s"
+    sql = "Delete from productos where id=%s"
     conn = mysql.connection
     cursor = conn.cursor()
-    
+
     cursor.execute(sqlImagen, (id,))
     fila = cursor.fetchone()
 
@@ -82,21 +89,23 @@ def delete(id):
         rutaImagenAnterior = os.path.join(app.config["CARPETA"], nombreImagenAnterior)
 
         if os.path.exists("./" + rutaImagenAnterior):
-            os.remove("./" + rutaImagenAnterior)   
-    
+            os.remove("./" + rutaImagenAnterior)
+
     cursor.execute(sql, (id,))
     conn.commit()
     return redirect("/products")
 
+
 @app.route("/products/edit/<int:id>")
 def edit(id):
-    sql = "select * from `click`.`productos` where id=%s"
+    sql = "select * from productos where id=%s"
     conn = mysql.connection
     cursor = conn.cursor()
     cursor.execute(sql, (id,))
     productos = cursor.fetchall()
     cursor.close()
     return render_template("productos/edit.html", productos=productos)
+
 
 # Ruta para actualizar los datos de un producto
 @app.route("/products/update", methods=["POST"])
@@ -112,8 +121,7 @@ def update():
     conn = mysql.connection
     cursor = conn.cursor()
 
-    sql = "UPDATE `click`.`productos` SET titulo=%s,descripcion=%s,precio=%s,cantidad=%s,categoria=%s \
-    WHERE id=%s;"
+    sql = "UPDATE productos SET titulo=%s,descripcion=%s,precio=%s,cantidad=%s,categoria=%s WHERE id=%s;"
     datos = (_titulo, _descripcion, _precio, _cantidad, _categoria, _id)
     cursor.execute(sql, datos)
 
@@ -124,19 +132,21 @@ def update():
         _imagen.save("./uploads/" + nuevoNombreImagen)
 
         # Consultamos la foto anterior para borrarla del servidor
-        sql = "SELECT imagen FROM `click`.`productos` WHERE id=%s"
+        sql = "SELECT imagen FROM productos WHERE id=%s"
         cursor.execute(sql, (_id,))
         fila = cursor.fetchone()
 
         if fila and fila[0] is not None:
             nombreImagenAnterior = fila[0]
-            rutaImagenAnterior = os.path.join(app.config["CARPETA"], nombreImagenAnterior)
+            rutaImagenAnterior = os.path.join(
+                app.config["CARPETA"], nombreImagenAnterior
+            )
 
             if os.path.exists("./" + rutaImagenAnterior):
                 os.remove("./" + rutaImagenAnterior)
 
             # Actualizamos la base de datos con el nuevo nombre de la foto
-            sql = "UPDATE `click`.`productos` SET imagen=%s WHERE id=%s"
+            sql = "UPDATE productos SET imagen=%s WHERE id=%s"
             cursor.execute(sql, (nuevoNombreImagen, _id))
 
     conn.commit()
@@ -169,8 +179,7 @@ def storage():
 
     datos = (_titulo, _descripcion, _precio, nuevoNombreImagen, _cantidad, _categoria)
 
-    sql = "INSERT INTO `click`.`productos`(`id`,`titulo`,`descripcion`,`precio`,`imagen`,\
-       `cantidad`,`categoria`) VALUES (NULL, %s, %s, %s, %s, %s, %s);"
+    sql = "INSERT INTO productos (`id`,`titulo`,`descripcion`,`precio`,`imagen`,`cantidad`,`categoria`) VALUES (NULL, %s, %s, %s, %s, %s, %s);"
 
     conn = mysql.connection
     cursor = conn.cursor()

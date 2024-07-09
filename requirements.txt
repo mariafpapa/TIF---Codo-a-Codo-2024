@@ -1,0 +1,11 @@
+Flask
+Flask-Cors
+Flask-JWT-Extended
+PyMySQL
+Gunicorn
+python-dotenv
+Flask-Uploads
+flask-restplus
+Flask-SQLAlchemy 
+mysqlclient 
+flask_mysqldb
