@@ -65,6 +65,17 @@
             ><i class="bx bx-home bx-tada-hover"></i> Inicio
           </a>
         </div>
+        <div
+          class="navbar-end animate__animated animate__fadeIn animate__delay-1s"
+        >
+          <figure class="image is-48x48 m-2">
+            <img id="photo" class="is-rounded" alt="user pic" />
+          </figure>
+          <p class="subtitle m-4" id="user"></p>
+          <div class="navbar-item">
+            <button id="exit" class="button is-danger">Salir</button>
+          </div>
+        </div>
       </div>
     </nav>
 
@@ -93,6 +104,8 @@
                     name="txtTitulo"
                     id="txtTitulo"
                     placeholder="Ingrese el título de su producto"
+                    minlength="3"
+                    maxlength="50"
                   />
                 </div>
               </div>
@@ -107,6 +120,8 @@
                     name="txtDescripcion"
                     id="txtDescripcion"
                     placeholder="Ingrese la descripción de su producto"
+                    minlength="3"
+                    maxlength="1000"
                   />
                 </div>
               </div>
@@ -120,6 +135,8 @@
                     name="txtPrecio"
                     id="txtPrecio"
                     placeholder="Ingrese el precio de su producto"
+                    minlength="1"
+                    maxlength="10"
                   />
                 </div>
               </div>
@@ -133,6 +150,8 @@
                     name="txtCantidad"
                     id="txtCantidad"
                     placeholder="Ingrese la cantidad de su producto"
+                    minlength="1"
+                    maxlength="10"
                   />
                 </div>
               </div>
