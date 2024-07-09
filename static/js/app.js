@@ -32,36 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    const inputUsername = document.querySelector('#username');
-    const inputPassword = document.querySelector('#password');
-    const buttonLogin = document.querySelector('#login');
-    buttonLogin.addEventListener('click', (event) => {
-        event.preventDefault();
-        if (inputUsername.value !== '' && inputPassword.value !== '') {
-            fetch('https://click-backend.onrender.com/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    username: inputUsername.value,
-                    password: inputPassword.value
-                })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.message) {
-                        alert(data.message);
-                    } else {
-                        window.localStorage.setItem('clickToken', data.token);
-                        window.location.href = '/products';
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-
-        }
-
-    });
 
     validationInput("inputName", "adviceName", "nombre no válido, es demasiado corto");
     validationInput("inputEmail", "adviceEmail", "correo electrónico no válido, por favor compruébelo");
