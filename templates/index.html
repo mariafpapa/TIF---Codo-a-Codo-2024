@@ -92,36 +92,16 @@
             ><i class="bx bx-envelope bx-tada-hover"></i> Contáctenos
           </a>
         </div>
-        
+
         <div class="navbar-end">
           <div class="navbar-item">
-            <form action="/login" method="post">
-
-              <div class="field has-addons">
-                <p class="control">
-                  <input
-                  id="username"
-                  name="username"
-                  class="input"
-                  type="text"
-                  placeholder="Usuario"
-                />
-              </p>
-              <p class="control">
-                <input
-                id="password"
-                name="password"
-                class="input"
-                type="password"
-                placeholder="Contraseña"
-                />
-              </p>
-              <p id="login" class="control">
-                <a type="submit" class="button is-primary">
-                  <i class="bx bx-log-in"></i> Ingresar
-                </a>
-              </p>
-            </form>
+            <div class="buttons">
+              <!-- <a class="button is-primary">
+                <strong><i class="bx bx-user-plus"></i> Registrar</strong>
+              </a> -->
+              <a class="button is-light" href="{{ url_for('indexProductos') }}"
+                ><i class="bx bx-user-circle"></i> Dashboard
+              </a>
             </div>
           </div>
         </div>
