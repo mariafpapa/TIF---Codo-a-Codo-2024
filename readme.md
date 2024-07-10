@@ -4,7 +4,7 @@
 
 > Este repositorio contiene el código desarrollado por el Grupo 21 de la Comisión 24149 del curso FullStack Python Codo a Codo 2024.
 
-Integrantes del grupo:
+### Integrantes del grupo:
 
 - Maria Florencia Papa
 - Albano Juvenal
@@ -18,26 +18,28 @@ Integrantes del grupo:
 - Facilitar a los usuarios la búsqueda y comparación de productos.
 - Permitir a los usuarios realizar compras online de forma sencilla y segura.
 
-Tecnologías utilizadas:
+### Tecnologías utilizadas:
 
+```
 > Backend:
-
 - Python
 - Flask
 - MySQL
 
 > Frontend:
-
 - HTML5
 - JavaScript
 - CSS
 
 > Frameworks:
-
 - Bulma
 - Animate
 
 > Recursos:
-
 - Íconos: Boxicons
 - Imágenes SVG: Undraw
+```
+
+### Despliegue:
+
+- El proyecto se encuentra desplegado en https://24149grupo21.pythonanywhere.com/
